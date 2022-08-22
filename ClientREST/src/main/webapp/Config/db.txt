@@ -2,4 +2,4 @@ jdbc:mysql://147.52.17.140
 student_population_statistics
 3306
 opendata
-op3nd@ta
+123
