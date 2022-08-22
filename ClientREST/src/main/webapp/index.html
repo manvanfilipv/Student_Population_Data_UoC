@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+        <meta name="description" content="University of Crete, public open data about undergraduate, graduate, PHD students.">
+        <title>OpenData - UoC</title>
+        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png">   
+    </head>
+    
+    <body>
+        <img id="uoc_pic" alt="uoc picture" src="img/uoc_header.png">
+
+        <div class="dropdown">
+            <button class="dropbtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-server" viewBox="0 0 16 16">
+                <path d="M1.333 2.667C1.333 1.194 4.318 0 8 0s6.667 1.194 6.667 2.667V4c0 1.473-2.985 2.667-6.667 2.667S1.333 5.473 1.333 4V2.667z"/>
+                <path d="M1.333 6.334v3C1.333 10.805 4.318 12 8 12s6.667-1.194 6.667-2.667V6.334c-.43.32-.931.58-1.458.79C11.81 7.684 9.967 8 8 8c-1.967 0-3.81-.317-5.21-.876a6.508 6.508 0 0 1-1.457-.79z"/>
+                <path d="M14.667 11.668c-.43.319-.931.578-1.458.789-1.4.56-3.242.876-5.209.876-1.967 0-3.81-.316-5.21-.876a6.51 6.51 0 0 1-1.457-.79v1.666C1.333 14.806 4.318 16 8 16s6.667-1.194 6.667-2.667v-1.665z"/>
+                </svg>
+                DATA
+            </button>
+            <div class="dropdown-content">
+                <div class="dropdown-submenu">
+                    <a href="#">
+                        Graduate students per
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                        </svg>
+                    </a>
+
+                    <div class="dropdown-submenu-content">
+                        <a href="#" id="gs_gy">graduation year</a>
+                        <a href="#" id="gs_ay">academic year</a>
+                    </div>
+                </div>
+                <div class="dropdown-submenu">
+                    <a href="#">
+                        PHD students per
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                        </svg>
+                    </a>
+                    <div class="dropdown-submenu-content">
+                        <a href="#" id="ps_gy">graduation year</a>
+                        <a href="#" id="ps_ay">academic year</a>
+                    </div>
+                </div>
+                <div class="dropdown-submenu">
+                    <a href="#">
+                        Undergraduate students per
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                        </svg>
+                    </a>
+                    <div class="dropdown-submenu-content">
+                        <a href="#" id="us_gy">graduation year</a>
+                        <a href="#" id="us_ay">academic year</a>
+                        <a href="#" id="us_a">age</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">
+                <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z"/>
+                </svg>
+                CHARTS
+            </button>
+            <div class="dropdown-content">
+                <div class="dropdown-submenu">
+                    <a href="#">
+                        Graduate students per
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                        </svg>
+                    </a>
+
+                    <div class="dropdown-submenu-content">
+                        <a href="#" id="gs_gy_charts">graduation year</a>
+                        <a href="#" id="gs_ay_charts">academic year</a>
+                    </div>
+                </div>
+                <div class="dropdown-submenu">
+                    <a href="#">
+                        PHD students per
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                        </svg>
+                    </a>
+                    <div class="dropdown-submenu-content">
+                        <a href="#" id="ps_gy_charts">graduation year</a>
+                        <a href="#" id="ps_ay_charts">academic year</a>
+                    </div>
+                </div>
+                <div class="dropdown-submenu">
+                    <a href="#">
+                        Undergraduate students per
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                        </svg>
+                    </a>
+                    <div class="dropdown-submenu-content">
+                        <a href="#" id="us_gy_charts">graduation year</a>
+                        <a href="#" id="us_ay_charts">academic year</a>
+                        <a href="#" id="us_a_charts">age</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="home">
+            <div class="container">
+                <div class="jumbotron">
+                    <h1>Open Data - UoC</h1>
+                    <p>This page refers to public open data of undergraduate, graduate and PHD students attending studies in University of Crete</p>
+                    <p>There are two ways of representation of data, one with big tables and one with charts</p>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            <img src = "img/uni2.jpg" alt="uni1" width="500" height="400">
+                        </div>
+                        <div class="col-sm">
+                            <img src = "img/uni1.jpg" alt="uni2" width="500" height="400">
+                        </div>
+                    </div>
+                </div>            
+            </div>
+        </div>
+
+        <div id="data" style="display: none;">
+            <h2 id = "header_table"></h2>
+            <p>Search the table, based on the input fields.</p>
+            <p><u><b>*Graduation Year K</b></u> refers to the minimum required years until graduation in each department.</p>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Year</span>
+                </div>
+                <input type="text" class="form-control" id="year" aria-labelledby="year">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="column_change"></span>
+                </div>
+                <input type="text" class="form-control" id="wildcard" aria-labelledby="wildcard">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Department</span>
+                </div>
+                <input type="text" class="form-control" id="department" aria-labelledby="department">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Gender</span>
+                </div>
+                <input type="text" class="form-control" id="gender" aria-labelledby="gender">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Value</span>
+                </div>
+                <input type="text" class="form-control" id="value" aria-labelledby="value">           
+            </div>
+            <div>
+                <table class="w3-table-all w3-centered w3-hoverable" id="myTable"></table>
+            </div>
+        </div>
+
+        <div id="charts" style="display: none;">
+            <h3>Choose an alternative year</h3>
+            <div class="select">
+                <select class="select" id="slct">
+                    <option>2006-07</option>
+                    <option>2007-08</option>
+                    <option>2008-09</option>
+                    <option>2009-10</option>
+                    <option>2010-11</option>
+                    <option>2011-12</option>
+                    <option>2012-13</option>
+                    <option>2013-14</option>
+                    <option>2014-15</option>
+                    <option>2015-16</option>
+                    <option>2016-17</option>
+                    <option>2017-18</option>
+                    <option selected>2018-19</option>
+                </select>
+            </div>
+            <svg id = "svg" width="900" height="800" ></svg>
+        </div>
+
+        <script>
+            const server = 'http://147.52.17.140:8080/ClientREST';
+            //const server = 'http://localhost:8080/ClientREST';
+            const current_year = "2018-19";
+
+            const home = document.getElementById('home');
+            const data = document.getElementById('data');
+            const charts = document.getElementById('charts');
+            const myTable = document.getElementById("myTable");
+            const uoc_pic = document.getElementById('uoc_pic');
+
+            const year = document.getElementById("year");
+            const wildcard = document.getElementById("wildcard");
+            const department = document.getElementById("department");
+            const gender = document.getElementById("gender");
+            const table_value = document.getElementById("value");
+
+            const change = document.getElementById("column_change");
+            const header_table = document.querySelector('#header_table');
+
+            uoc_pic.addEventListener('click', home_handler, false);
+
+            gs_gy.addEventListener('click', loadDoc, false);
+            gs_gy.myParam = server + '/rest/services/grad/getTotalpergradyear';
+            gs_ay.addEventListener('click', loadDoc, false);
+            gs_ay.myParam = server + '/rest/services/grad/getTotalperacadyear';
+
+            ps_gy.addEventListener('click', loadDoc, false);
+            ps_gy.myParam = server + '/rest/services/phd/getTotalpergradyear';
+            ps_ay.addEventListener('click', loadDoc, false);
+            ps_ay.myParam = server + '/rest/services/phd/getTotalperacadyear';
+
+            us_ay.addEventListener('click', loadDoc, false);
+            us_ay.myParam = server + '/rest/services/undergrad/getTotalperacadyear';
+            us_gy.addEventListener('click', loadDoc, false);
+            us_gy.myParam = server + '/rest/services/undergrad/getTotalpergradyear';
+            us_a.addEventListener('click', loadDoc, false);
+            us_a.myParam = server + '/rest/services/undergrad/getTotalperage';
+
+            function inputs_clear() {
+                year.value = "";
+                wildcard.value = "";
+                department.value = "";
+                gender.value = "";
+                table_value.value = "";
+            }
+
+            function loadDoc(evt) {
+                data_handler();
+                inputs_clear();
+                if (evt.target.id === "gs_gy") {
+                    change.innerHTML = "Graduation Year";
+                    header_table.innerHTML = "Graduate students per graduation year";
+                } else if (evt.target.id === "gs_ay") {
+                    change.innerHTML = "Academic Year";
+                    header_table.innerHTML = "Graduate students per academic year";
+                } else if (evt.target.id === "ps_ay") {
+                    change.innerHTML = "Academic Year";
+                    header_table.innerHTML = "PHD students per academic year";
+                } else if (evt.target.id === "ps_gy") {
+                    change.innerHTML = "Graduation Year";
+                    header_table.innerHTML = "PHD students per graduation year";
+                } else if (evt.target.id === "us_gy") {
+                    change.innerHTML = "Graduation Year";
+                    header_table.innerHTML = "Undergraduate students per graduation year";
+                } else if (evt.target.id === "us_ay") {
+                    change.innerHTML = "Academic Year";
+                    header_table.innerHTML = "Undergraduate students per academic year";
+                } else if (evt.target.id === "us_a") {
+                    change.innerHTML = "Age";
+                    header_table.innerHTML = "Undergraduate students per age";
+                }
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        myTable.innerHTML = this.responseText;
+                    }
+                };
+                xhttp.open("GET", evt.currentTarget.myParam, true);
+                xhttp.send();
+
+            }
+
+            const gs_gy_charts = document.querySelector('#gs_gy_charts');
+            const gs_ay_charts = document.querySelector('#gs_ay_charts');
+            const ps_gy_charts = document.querySelector('#ps_gy_charts');
+            const ps_ay_charts = document.querySelector('#ps_ay_charts');
+            const us_gy_charts = document.querySelector('#us_gy_charts');
+            const us_ay_charts = document.querySelector('#us_ay_charts');
+            const us_a_charts = document.querySelector('#us_a_charts');
+            const slct = document.getElementById("slct");
+
+            gs_gy_charts.addEventListener('click', student_charts, false);
+            gs_ay_charts.addEventListener('click', student_charts, false);
+            ps_gy_charts.addEventListener('click', student_charts, false);
+            ps_ay_charts.addEventListener('click', student_charts, false);
+            us_gy_charts.addEventListener('click', student_charts, false);
+            us_ay_charts.addEventListener('click', student_charts, false);
+            us_a_charts.addEventListener('click', student_charts, false);
+
+            slct.addEventListener('change', alternative_charts, false);
+
+            var part_url = "";
+            var action = "";
+            var csv_name = "";
+            var temp_year = "";
+            function student_charts(evt) {
+                charts_handler();
+                slct.value = current_year;
+                csv_name = "";
+                if (evt.target.id === "gs_gy_charts") {
+                    part_url = "grad";
+                    action = "getGrandTotalofGraduationYears";
+                    csv_name = "ggy";
+                } else if (evt.target.id === "gs_ay_charts") {
+                    part_url = "grad";
+                    action = "getGrandTotalofAcademicYears";
+                    csv_name = "gay";
+                } else if (evt.target.id === "ps_ay_charts") {
+                    part_url = "phd";
+                    action = "getGrandTotalofAcademicYears";
+                    csv_name = "pay";
+                } else if (evt.target.id === "ps_gy_charts") {
+                    part_url = "phd";
+                    action = "getGrandTotalofGraduationYears";
+                    csv_name = "pgy";
+                } else if (evt.target.id === "us_gy_charts") {
+                    part_url = "undergrad";
+                    action = "getGrandTotalofGraduationYears";
+                    csv_name = "ugy";
+                } else if (evt.target.id === "us_ay_charts") {
+                    part_url = "undergrad";
+                    action = "getGrandTotalofAcademicYears";
+                    csv_name = "uay";
+                } else if (evt.target.id === "us_a_charts") {
+                    part_url = "undergrad";
+                    action = "getGrandTotalofAges";
+                    csv_name = "uage";
+                }
+                temp_year = current_year;
+                loadcharts(server + '/rest/services/' + part_url + '/' + action + '/' + current_year);
+            }
+
+            function alternative_charts(evt) {
+                temp_year = document.getElementById(evt.target.id).value;
+                loadcharts(server + '/rest/services/' + part_url + '/' + action + '/' + document.getElementById(evt.target.id).value);
+            }
+
+
+            function loadcharts(x) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState === 4 && this.status === 200) {
+                        document.getElementById("svg").innerHTML = "";
+                        var flag = 0;
+                        if (part_url === "undergrad"){
+                            flag = 1;
+                        }
+                        
+                        d3js(this.responseText,flag);
+                    }
+                };
+                xhttp.open("GET", x, false);
+                xhttp.send();
+            }
+
+
+
+            var x1,y1,g1,height1;
+            function d3js(title,flag) {
+                var x_title = title.substring(title.indexOf("=") + 1, title.length);
+                var title = title.substring(0, title.indexOf("="));
+                if (flag === 1){
+                    document.getElementById("svg").setAttribute("width", "1200");
+                    document.getElementById("svg").setAttribute("height", "1100");
+                } else {
+                    document.getElementById("svg").setAttribute("width", "900");
+                    document.getElementById("svg").setAttribute("height", "800");
+                }
+                var svg = d3.select("#svg"),margin = 200, width = d3.select("#svg").attr("width") - margin, height = d3.select("#svg").attr("height") - margin;
+                height1 = height;
+                svg.append("text")
+                        .attr("transform", "translate(100,0)")
+                        .attr("x", 50)
+                        .attr("y", 50)
+                        .attr("font-size", "24px")
+                        .text(title)
+                        .style('fill', 'rgb(139, 50, 43)');
+
+                x = d3.scaleBand().range([0, width]).padding(0.4);
+                y = d3.scaleLinear().range([height, 0]);
+                x1 = x;
+                y1 = y;
+                
+                var g = svg.append("g").attr("transform", "translate(" + 100 + "," + 100 + ")");
+                g1 = g;
+                
+                d3.csv("Data/" + csv_name + temp_year + ".csv", function (error, data) {
+                    if (error) {
+                        throw error;
+                    }   
+                    x.domain(data.map(function (d) {
+                        return d.year.toString();
+                    }));
+                    y.domain([0, d3.max(data, function (d) {
+                            return parseInt(d.value);
+                        })]);
+                    if (flag === 1){
+                        g.append("g")
+                            .attr("transform", "translate(0," + height + ")")
+                            .call(d3.axisBottom(x))
+                            .append("text")
+                            .attr("y", height - 870)
+                            .attr("x", width - 10)
+                            .attr("text-anchor", "end")
+                            .attr("stroke", "black")
+                            .text(x_title);
+                    } else {
+                        g.append("g")
+                            .attr("transform", "translate(0," + height + ")")
+                            .call(d3.axisBottom(x))
+                            .append("text")
+                            .attr("y", height - 565)
+                            .attr("x", width - 10)
+                            .attr("text-anchor", "end")
+                            .attr("stroke", "black")
+                            .text(x_title);
+                    }
+                    
+
+                    g.append("g")
+                            .call(d3.axisLeft(y).tickFormat(function (d) {
+                                return d;
+                            }).ticks(10))
+                            .append("text")
+                            .attr("transform", "rotate(-90)")
+                            .attr("y", 6)
+                            .attr("dy", "-5.1em")
+                            .attr("text-anchor", "end")
+                            .attr("stroke", "black")
+                            .text("Number of students");
+
+                    g.selectAll(".bar")
+                            .data(data)
+                            .enter().append("rect")
+                            .attr("class", "bar")
+                            .style('fill', 'steelblue')
+                            .on("mouseover", onMouseOver) //Add listener for the mouseover event
+                            .on("mouseout", onMouseOut)   //Add listener for the mouseout event
+                            .attr("x", function (d) {
+                                return x(d.year);
+                            })
+                            .attr("y", function (d) {
+                                return y(d.value);
+                            })
+                            .attr("width", x.bandwidth())
+                            .transition()
+                            .ease(d3.easeLinear)
+                            .duration(400)
+                            .delay(function (d, i) {
+                                return i * 50;
+                            })
+                            .attr("height", function (d) {
+                                return height - y(d.value);
+                            });
+                });
+            }
+
+            //mouseover event handler function
+            function onMouseOver(d) {
+                d3.select(this).attr('class', 'highlight');
+                d3.select(this)
+                        .transition()     // adds animation
+                        .duration(400)
+                        .style('fill', 'rgb(139, 50, 43)')
+                        .attr('width', x1.bandwidth() + 5)
+                        .attr("y", function (d) {
+                            return y1(d.value) - 10;
+                        })
+                        .attr("height", function (d) {
+                            return height1 - y1(d.value) + 10;
+                        });
+
+                g1.append("text")
+                        .attr('class', 'val')
+                        .attr('x', function () {
+                            return x1(d.year);
+                        })
+                        .attr('y', function () {
+                            return y1(d.value) - 15;
+                        })
+                        .text(function () {
+                            return [d.value];  // Value of the text
+                        });
+            }
+
+            //mouseout event handler function
+            function onMouseOut() {
+                // use the text label class to remove label on mouseout
+                d3.select(this).attr('class', 'bar');
+                d3.select(this)
+                        .transition()     // adds animation
+                        .duration(400)
+                        .style('fill', 'steelblue')
+                        .attr('width', x1.bandwidth())
+                        .attr("y", function (d) {
+                            return y1(d.value);
+                        })
+                        .attr("height", function (d) {
+                            return height1 - y1(d.value);
+                        });
+
+                d3.selectAll('.val')
+                        .remove();
+            }
+
+
+            const year_q = document.querySelector('#year');
+            const wildcard_q = document.querySelector('#wildcard');
+            const department_q = document.querySelector('#department');
+            const gender_q = document.querySelector('#gender');
+            const value_q = document.querySelector('#value');
+
+            year_q.addEventListener('keyup', filterTable, false);
+            wildcard_q.addEventListener('keyup', filterTable, false);
+            department_q.addEventListener('keyup', filterTable, false);
+            gender_q.addEventListener('keyup', filterTable, false);
+            value_q.addEventListener('keyup', filterTable, false);
+
+
+            function home_handler() {
+                home.style.display = 'block';
+                charts.style.display = 'none';
+                data.style.display = 'none';
+                myTable.innerHTML = null;
+            }
+
+            function data_handler() {
+                data.style.display = 'block';
+                home.style.display = 'none';
+                charts.style.display = 'none';
+            }
+            function charts_handler() {
+                charts.style.display = 'block';
+                data.style.display = 'none';
+                home.style.display = 'none';
+                myTable.innerHTML = null;
+            }
+            var firstCol, secondCol, thirdCol, fourthCol, fifthCol;
+            var filter, second_filter, third_filter, fourth_filter, fifth_filter;
+            function filterTable() {
+                var flag = false;
+                if (year)
+                    filter = year.value.toUpperCase();
+                else
+                    filter = "";
+                if (wildcard) {
+                    if (wildcard.value.toUpperCase() === "K") {
+                        flag = true;
+                    }
+                    second_filter = wildcard.value.toUpperCase();
+                } else
+                    second_filter = "";
+                if (department)
+                    third_filter = department.value.toUpperCase();
+                else
+                    third_filter = "";
+                if (gender)
+                    fourth_filter = new RegExp('\\b' + gender.value.toUpperCase() + '\\b');
+                else
+                    fourth_filter = "";
+                if (table_value)
+                    fifth_filter = new RegExp('\\b' + table_value.value.toUpperCase() + '\\b');
+                else
+                    fifth_filter = "";
+
+                var rows = document.querySelector("#myTable tbody").rows;
+                var i;
+                for (i = 0; i < rows.length; i++) {
+                    firstCol = rows[i].cells[0].textContent.toUpperCase();
+                    secondCol = rows[i].cells[1].textContent.toUpperCase();
+                    thirdCol = rows[i].cells[2].textContent.toUpperCase();
+                    fourthCol = rows[i].cells[3].textContent.toUpperCase();
+                    fifthCol = rows[i].cells[4].textContent.toUpperCase();
+                    if (flag) {
+                        if (firstCol.indexOf(filter) > -1
+                                && second_filter === secondCol
+                                && thirdCol.indexOf(third_filter) > -1
+                                && fourth_filter.test(fourthCol)
+                                && fifth_filter.test(fifthCol)
+                                )
+                            rows[i].style.display = "";
+                        else
+                            rows[i].style.display = "none";
+                    } else {
+                        if (firstCol.indexOf(filter) > -1
+                                && secondCol.indexOf(second_filter) > -1
+                                && thirdCol.indexOf(third_filter) > -1
+                                && fourth_filter.test(fourthCol)
+                                && fifth_filter.test(fifthCol)
+                                )
+                            rows[i].style.display = "";
+                        else
+                            rows[i].style.display = "none";
+                    }
+
+                }
+            }
+        </script>
+    </body>
+
+</html>

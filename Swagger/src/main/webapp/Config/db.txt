@@ -1,0 +1,5 @@
+jdbc:mysql://localhost
+student_population_statistics
+3306
+opendata
+op3nd@ta

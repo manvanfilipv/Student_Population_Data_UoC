@@ -1,0 +1,29 @@
+body {font-family: "Lato", sans-serif;color: #777;text-align: center;}
+
+.w3-table-all{border-collapse:collapse;border-spacing:0;width:100%;display:table}.w3-table-all{border:1px solid #ccc}
+.w3-bordered tr,.w3-table-all tr{border-bottom:1px solid #ddd}.w3-striped tbody tr:nth-child(even){background-color:#f1f1f1}
+.w3-table-all tr:nth-child(odd){background-color:#fff}.w3-table-all tr:nth-child(even){background-color:#f1f1f1}
+.w3-hoverable tbody tr:hover,.w3-ul.w3-hoverable li:hover{background-color:#ccc}.w3-centered tr th,.w3-centered tr td{text-align:center}
+.w3-table td,.w3-table th,.w3-table-all td,.w3-table-all th{padding:8px 8px;display:table-cell;text-align:left;vertical-align:top}
+.w3-table th:first-child,.w3-table td:first-child,.w3-table-all th:first-child,.w3-table-all td:first-child{padding-left:16px}
+
+.dropbtn{background-color:#fff;color:#777;padding:14px;font-size:17px;border:none}
+.dropdown,.dropdown-submenu{position:relative;display:inline-block}
+.dropdown-content,.dropdown-submenu-content{display:none;position:absolute;background-color:#fff;min-width:260px;box-shadow:0 8px 16px 0 rgba(0,0,0,.2);z-index:1}
+.dropdown-content a,.dropdown-submenu-content a{color:#000;padding:12px 16px;display:block}
+.dropdown-content a:hover,.dropdown-submenu-content a:hover{background-color:#ddd}
+.dropdown-submenu:hover .dropdown-submenu-content,.dropdown:hover .dropdown-content{display:block}
+.dropdown:hover .dropbtn{background-color:#ddd}
+.dropdown-submenu{position:relative}
+.dropdown-submenu-content{left:100%;top:0;min-width:100px;white-space:nowrap}
+.dropdown-submenu:hover .dropdown-submenu-content{display:inline-block}
+
+.select {position: relative;display: block;width: 10em;height: 3em;line-height: 3;background: #ffffff;overflow: hidden;padding: 0 .5em;color: rgb(0, 0, 0);cursor: pointer;margin:auto;}
+/* Arrow */
+.select::after {content: '\25BC';position: absolute;top: 0;right: 0;padding: 0 1em;background: #ddd;cursor: pointer;pointer-events: none;-webkit-transition: .25s all ease;-o-transition: .25s all ease;transition: .25s all ease;}
+/* Transition */
+.select:hover::after {color: rgb(139, 50, 43);}
+.img {
+    width: 100%;
+    height: auto;
+}

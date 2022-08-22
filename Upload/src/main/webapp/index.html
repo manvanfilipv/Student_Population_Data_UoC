@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>File Uploading Form</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+        <meta name="description" content="Upload datasets, University of Crete, public open data about undergraduate, graduate, PHD students.">
+        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="img/favicon-96x96.png"> 
+    </head>
+    <body>
+        <img id="uoc_pic" alt="uoc picture" src="img/uoc_header.png">
+        
+        <div class="dropdown">
+            <button class="dropbtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                </svg>
+                 ADMIN
+            </button>
+            <div class="dropdown-content">
+                <div class="dropdown-submenu">
+                    <div class="dropdown-submenu">
+                        <a href="#" id="upload_table">Upload</a>
+                    </div>
+                </div>               
+            </div>
+        </div>
+
+        <div id="home">
+            <div class="container">
+                <div class="jumbotron">
+                    <h1>Open Data - Admin</h1>
+                    <p>This page refers to Admin actions dedicated to public open data of undergraduate, graduate and PHD students attending studies in University of Crete</p>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            <img src = "img/uni2.jpg" alt="uni1" width="500" height="400">
+                        </div>
+                        <div class="col-sm">
+                            <img src = "img/uni1.jpg" alt="uni2" width="500" height="400">
+                        </div>
+                    </div>
+                </div>            
+            </div>
+        </div>
+
+        <div class="container">
+            <div id="upload" style="display: none;">
+                <h3>File Upload:</h3>
+                <br>
+                <form action = "UploadServlet" method = "post" enctype = "multipart/form-data">
+                    <input type = "file" name = "file" size = "50" />
+                    <br><br>
+                    <label for="pwd">Password:</label>
+                    <input type="password" id="pwd" name="pwd">
+                    <br><br>
+                    <input type = "submit" value = "Upload File" />
+                </form>
+            </div>
+        </div>
+    </body>
+    <script>
+        const uoc_pic = document.getElementById('uoc_pic');
+        const home = document.getElementById('home');
+        const upload = document.getElementById('upload');
+        const upload_table = document.getElementById('upload_table');
+        uoc_pic.addEventListener('click', home_handler, false);
+        upload_table.addEventListener('click', upload_handler, false);
+        function home_handler() {
+            home.style.display = 'block';
+            upload.style.display = 'none';
+        }
+        function upload_handler() {
+            upload.style.display = 'block';
+            home.style.display = 'none';
+        }
+    </script>
+</html>

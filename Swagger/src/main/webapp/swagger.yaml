@@ -1,0 +1,3688 @@
+openapi: 3.0.0
+info:
+  title: OpenDataAPI - UoC
+  description: <h3>This page provides different formats for the student population data, available from the University of Crete Open Data Catalog.</h3><br/> <h4>Note that,  <u>graduation year K</u> refers to the minimum number of required year for graduation by each department.<h4>
+  version: 1.0.0
+servers:
+  - url: 'http://147.52.17.140:8080/Swagger/'
+tags:
+  - name: PHD
+    description: Operation dedicated to PHD students
+  - name: Graduate
+    description: Operation dedicated to Post-graduate students
+  - name: Under-Graduate
+    description: Operation dedicated to Under-Graduate students
+paths:
+  '/open/services/phd/getRecordsperGraduationYear/{year}/{grad_year}':
+    get:
+      tags:
+        - PHD
+      summary: Get every record of PHD students containing a specific graduation year from a chosen year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: grad_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - K
+              - K+1
+              - K+2
+              - K+3
+              - K+4
+              - '>K+4'
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    Department:
+                      type: string
+                    Male:
+                      type: string
+                    Female:
+                      type: string
+                    Total:
+                      type: string  
+            application/xml:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    year:
+                      type: string
+                      xml:
+                        attribute: true
+                    grad_year:
+                      type: string
+                      xml:
+                        attribute: true
+                    Department:
+                      type: string
+                    Male:
+                      type: string
+                    Female:
+                      type: string
+                    Total:
+                      type: string
+            text/html:
+              schema:
+                type: string
+              examples:
+                html:
+                  summary: A sample HTML response
+                  value: '<html><head></head><body><table><tbody><tr><th>DEPARTMENT</th><th>GENDER</th><th>VALUE</th></tr><tr><td>Department of Primary Education</td><td>Male</td><td>0</td></tr></tbody></table></html>'
+            text/plain:
+              schema:
+                type: string
+              examples:
+                csv:
+                  summary: A sample CSV response
+                  value: 'Department;Male;Female;Total\nDepartment of Primary Education;1;3;4\nDepartment of Preschool Education;2;3;5'
+  '/open/services/phd/getRecordsperAcademicYear/{year}/{academic_year}':
+    get:
+      tags:
+        - PHD
+      summary: Get every record of PHD students containing a specific academic year from a chosen year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: academic_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+              - '3'
+              - '4'
+              - '5'
+              - '6'
+              - '7'
+              - 8+
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/phd/getRecordsperGraduationYearOnlyGrad/{grad_year}':
+    get:
+      tags:
+        - PHD
+      summary: Get every record of PHD students containing a specific graduation year
+      parameters:
+        - name: grad_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - K
+              - K+1
+              - K+2
+              - K+3
+              - K+4
+              - '>K+4'
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/phd/getRecordsperAcademicYearOnlyAcad/{academic_year}':
+    get:
+      tags:
+        - PHD
+      summary: Get every record of PHD students containing a specific academic year
+      parameters:
+        - name: academic_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+              - '3'
+              - '4'
+              - '5'
+              - '6'
+              - '7'
+              - 8+
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/phd/getRecordValueperGraduationYear/{year}/{grad_year}/{department}/{gender}':
+    get:
+      tags:
+        - PHD
+      summary: 'Search record of PHD students per category, graduation year, year, department and gender'
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: grad_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - K
+              - K+1
+              - K+2
+              - K+3
+              - K+4
+              - '>K+4'
+              - Total
+        - name: gender
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Male
+              - Female
+              - Total
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/phd/getRecordValueperAcademicYear/{year}/{academic_year}/{department}/{gender}':
+    get:
+      tags:
+        - PHD
+      summary: 'Search record of PHD students per category, academic year, year, department and gender'
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: academic_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+              - '3'
+              - '4'
+              - '5'
+              - '6'
+              - '7'
+              - 8+
+              - Total
+        - name: gender
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Male
+              - Female
+              - Total
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/phd/getRecordsperGraduationYearperDepartment/{department}/{grad_year}':
+    get:
+      tags:
+        - PHD
+      summary: Get every record of PHD students containing a specific graduation year from a department
+      parameters:
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+        - name: grad_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - K
+              - K+1
+              - K+2
+              - K+3
+              - K+4
+              - '>K+4'
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/phd/getRecordsperAcademicYearperDepartment/{department}/{academic_year}':
+    get:
+      tags:
+        - PHD
+      summary: Get every record of PHD students containing a specific academic year from a chosen department
+      parameters:
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+        - name: academic_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+              - '3'
+              - '4'
+              - '5'
+              - '6'
+              - '7'
+              - 8+
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/phd/getGrandTotalofAcademicYears/{year}':
+    get:
+      tags:
+        - PHD
+      summary: Get grand total of PHD students of all academic years per year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/phd/getGrandTotalofGraduationYears/{year}':
+    get:
+      tags:
+        - PHD
+      summary: Get grand total of PHD students of all graduation years per year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/phd/getGrandTotalofAcademicYearsPlusDep/{department}/{year}':
+    get:
+      tags:
+        - PHD
+      summary: Get grand total of PHD students of all academic years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/phd/getGrandTotalofGraduationYearsPlusDep/{department}/{year}':
+    get:
+      tags:
+        - PHD
+      summary: Get grand total of PHD students of all graduation years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/phd/getMaleGrandTotalofAcademicYears/{department}/{year}':
+    get:
+      tags:
+        - PHD
+      summary: Get grand total of male PHD students of all academic years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/phd/getMaleGrandTotalofGraduationYears/{department}/{year}':
+    get:
+      tags:
+        - PHD
+      summary: Get grand total of male PHD students of all graduation years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/phd/getFemaleGrandTotalofAcademicYears/{department}/{year}':
+    get:
+      tags:
+        - PHD
+      summary: Get grand total of female PHD students of all academic years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/phd/getFemaleGrandTotalofGraduationYears/{department}/{year}':
+    get:
+      tags:
+        - PHD
+      summary: Get grand total of female PHD students of all graduation years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/grad/getRecordsperGraduationYear/{year}/{grad_year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get every record of Graduate-students containing a specific graduation year from a chosen year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: grad_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - K
+              - K+1
+              - '>K+1'
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/grad/getRecordsperAcademicYear/{year}/{academic_year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get every record of Graduate-students containing a specific academic year from a chosen year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: academic_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+              - '3'
+              - 4+
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/grad/getRecordsperGraduationYearOnlyGrad/{grad_year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get every record of Graduate-students containing a specific graduation year
+      parameters:
+        - name: grad_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - K
+              - K+1
+              - '>K+1'
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/grad/getRecordsperAcademicYearOnlyAcad/{academic_year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get every record of Graduate-students containing a specific academic year
+      parameters:
+        - name: academic_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+              - '3'
+              - 4+
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/grad/getRecordValueperGraduationYear/{year}/{grad_year}/{department}/{gender}':
+    get:
+      tags:
+        - Graduate
+      summary: 'Search record of Graduate-students per category, graduation year, year, department and gender'
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: grad_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - K
+              - K+1
+              - '>K+1'
+              - Total
+        - name: gender
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Male
+              - Female
+              - Total
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/grad/getRecordValueperAcademicYear/{year}/{academic_year}/{department}/{gender}':
+    get:
+      tags:
+        - Graduate
+      summary: 'Search record of Graduate-students per category, academic year, year, department and gender'
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: academic_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+              - '3'
+              - 4+
+              - Total
+        - name: gender
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Male
+              - Female
+              - Total
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/grad/getRecordsperGraduationYearperDepartment/{department}/{grad_year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get every record of Graduate-students containing a specific graduation year from a chosen department
+      parameters:
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+        - name: grad_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - K
+              - K+1
+              - '>K+1'
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/grad/getRecordsperAcademicYearperDepartment/{department}/{academic_year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get every record of Graduate-students containing a specific academic year from a chosen department
+      parameters:
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+        - name: academic_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+              - '3'
+              - 4+
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/grad/getGrandTotalofAcademicYears/{year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get grand total of Graduate-students of all academic years per year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/grad/getGrandTotalofGraduationYears/{year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get grand total of Graduate-students of all graduation years per year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/grad/getGrandTotalofAcademicYearsPlusDep/{department}/{year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get grand total of Graduate-students of all academic years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/grad/getGrandTotalofGraduationYearsPlusDep/{department}/{year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get grand total of Graduate-students of all graduation years per year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/grad/getMaleGrandTotalofAcademicYears/{department}/{year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get grand total of male Graduate-students of all academic years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/grad/getMaleGrandTotalofGraduationYears/{department}/{year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get grand total of male Graduate-students of all graduation years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/grad/getFemaleGrandTotalofAcademicYears/{department}/{year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get grand total of female Graduate-students of all academic years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/grad/getFemaleGrandTotalofGraduationYears/{department}/{year}':
+    get:
+      tags:
+        - Graduate
+      summary: Get grand total of female Graduate-students of all graduation years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/undergrad/getRecordsperGraduationYear/{year}/{grad_year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get every record of Under-graduate students containing a specific graduation year from a chosen year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: grad_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - K
+              - K+1
+              - K+2
+              - K+3
+              - K+4
+              - '> K+4'
+              - K+5
+              - K+6
+              - '> K+6'
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/undergrad/getRecordsperAge/{year}/{age}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get every record of Under-graduate students containing a specific age from a chosen year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: age
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - <=17
+              - '18'
+              - '19'
+              - '20'
+              - '21'
+              - '22'
+              - '23'
+              - '24'
+              - '25'
+              - '26'
+              - '27'
+              - '28'
+              - '29'
+              - 30-34
+              - 35-39
+              - '>=40'
+              - Unkwown Age
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/undergrad/getRecordsperAcademicYear/{year}/{academic_year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get every record of Under-graduate students containing a specific academic year from a chosen year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: academic_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+              - '3'
+              - '4'
+              - '5'
+              - '6'
+              - '7'
+              - '8'
+              - '9'
+              - '10'
+              - 11+
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/undergrad/getRecordsperGraduationYearOnlyGrad/{grad_year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get every record of Under-graduate students containing a specific graduation year
+      parameters:
+        - name: grad_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - K
+              - K+1
+              - K+2
+              - K+3
+              - K+4
+              - '> K+4'
+              - K+5
+              - K+6
+              - '> K+6'
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/undergrad/getRecordsperAgeOnlyAge/{age}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get every record of Under-graduate students containing a specific age
+      parameters:
+        - name: age
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - <=17
+              - '18'
+              - '19'
+              - '20'
+              - '21'
+              - '22'
+              - '23'
+              - '24'
+              - '25'
+              - '26'
+              - '27'
+              - '28'
+              - '29'
+              - 30-34
+              - 35-39
+              - '>=40'
+              - Unkwown Age
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/undergrad/getRecordsperAcademicYearOnlyAcad/{academic_year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get every record of Under-graduate students containing a specific academic year
+      parameters:
+        - name: academic_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+              - '3'
+              - '4'
+              - '5'
+              - '6'
+              - '7'
+              - '8'
+              - '9'
+              - '10'
+              - 11+
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/undergrad/getRecordValueperGraduationYear/{year}/{grad_year}/{department}/{gender}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: 'Search record of Under-graduate per category, graduation year, year, department and gender'
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: grad_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - K
+              - K+1
+              - K+2
+              - K+3
+              - K+4
+              - '> K+4'
+              - K+5
+              - K+6
+              - '> K+6'
+              - Total
+        - name: gender
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Male
+              - Female
+              - Total
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/undergrad/getRecordValueperAcademicYear/{year}/{academic_year}/{department}/{gender}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: 'Search record of Under-graduate per category, academic year, year, department and gender'
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: academic_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+              - '3'
+              - '4'
+              - '5'
+              - '6'
+              - '7'
+              - '8'
+              - '9'
+              - '10'
+              - 11+
+              - Total
+        - name: gender
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Male
+              - Female
+              - Total
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/undergrad/getRecordValueperAge/{year}/{age}/{department}/{gender}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: 'Search record of - Under-graduate per category, age, year, department and gender'
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: age
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - <=17
+              - '18'
+              - '19'
+              - '20'
+              - '21'
+              - '22'
+              - '23'
+              - '24'
+              - '25'
+              - '26'
+              - '27'
+              - '28'
+              - '29'
+              - 30-34
+              - 35-39
+              - '>=40'
+              - Unkwown Age
+              - Total
+        - name: gender
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Male
+              - Female
+              - Total
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/undergrad/getRecordsperGraduationYearperDepartment/{department}/{grad_year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get every record of Under-graduate students containing a specific graduation year from a chosen department
+      parameters:
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+        - name: grad_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - K
+              - K+1
+              - K+2
+              - K+3
+              - K+4
+              - '> K+4'
+              - K+5
+              - K+6
+              - '> K+6'
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/undergrad/getRecordsperAgeperDepartment/{department}/{age}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get every record of Under-graduate students containing a specific age from a chosen department
+      parameters:
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+        - name: age
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - <=17
+              - '18'
+              - '19'
+              - '20'
+              - '21'
+              - '22'
+              - '23'
+              - '24'
+              - '25'
+              - '26'
+              - '27'
+              - '28'
+              - '29'
+              - 30-34
+              - 35-39
+              - '>=40'
+              - Unkwown Age
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/undergrad/getRecordsperAcademicYearperDepartment/{department}/{academic_year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get every record of Under-graduate students containing a specific academic year from a chosen department
+      parameters:
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+        - name: academic_year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+              - '3'
+              - '4'
+              - '5'
+              - '6'
+              - '7'
+              - '8'
+              - '9'
+              - '10'
+              - 11+
+              - Total
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+  '/open/services/undergrad/getGrandTotalofAcademicYears/{year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get grand total of Under-Graduate students of all academic years per year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/undergrad/getGrandTotalofGraduationYears/{year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get grand total of Under-Graduate students of all graduation years per year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/undergrad/getGrandTotalofAges/{year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get grand total of Under-Graduate students of all ages per year
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/undergrad/getGrandTotalofAcademicYearsPlusDep/{department}/{year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get grand total of Under-Graduate students of all academic years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/undergrad/getGrandTotalofGraduationYearsPlusDep/{department}/{year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get grand total of Under-Graduate students of all graduation years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/undergrad/getGrandTotalofAgesPlusDep/{department}/{year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get grand total of Under-Graduate students of all ages per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/undergrad/getMaleGrandTotalofAcademicYears/{department}/{year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get grand total of male Under-Graduatestudents of all academic years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/undergrad/getMaleGrandTotalofGraduationYears/{department}/{year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get grand total of male Under-Graduate students of all graduation years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/undergrad/getMaleGrandTotalofAges/{department}/{year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get grand total of male Under-Graduate students of all graduation years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/undergrad/getFemaleGrandTotalofAcademicYears/{department}/{year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get grand total of female Under-Graduate students of all academic years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/undergrad/getFemaleGrandTotalofGraduationYears/{department}/{year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get grand total of female Under-Graduate students of all graduation years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+  '/open/services/undergrad/getFemaleGrandTotalofAges/{department}/{year}':
+    get:
+      tags:
+        - Under-Graduate
+      summary: Get grand total of male Under-Graduate students of all graduation years per year and department
+      parameters:
+        - name: year
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - 2006-07
+              - 2007-08
+              - 2008-09
+              - 2009-10
+              - 2010-11
+              - 2011-12
+              - 2012-13
+              - 2013-14
+              - 2014-15
+              - 2015-16
+              - 2016-17
+              - 2017-18
+              - 2018-19
+        - name: department
+          in: path
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            enum:
+              - Department of Primary Education
+              - Department of Preschool Education
+              - Department of History and Archaeology
+              - Department of Philology
+              - Department of Philosophy and Social Studies
+              - Department of Physics
+              - Department of Biology
+              - Computer Science Department
+              - Mathematics
+              - Applied Mathematics
+              - Department of Materials Science and Technology
+              - Department of Chemistry
+              - School of Medicine
+              - Department of Psychology
+              - Department Of Political Science
+              - Department of Sociology
+              - Department of Economics
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+            text/html:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+            image/png:
+              schema:
+                type: string
+components: {}
